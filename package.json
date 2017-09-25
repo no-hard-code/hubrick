@@ -1,0 +1,33 @@
+{
+  "name": "hubrick",
+  "version": "1.0.0",
+  "description": "Flow engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "lint": "eslint src/**",
+    "build": "webpack",
+    "precommit": "npm run lint",
+    "prepush": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usehotkey-jr/hubrick.git"
+  },
+  "author": "github@usehotkey-jr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/usehotkey-jr/hubrick/issues"
+  },
+  "homepage": "https://github.com/usehotkey-jr/hubrick#readme",
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-preset-env": "1.6.0",
+    "eslint": "4.7.2",
+    "jest": "21.1.0",
+    "webpack": "3.6.0"
+  }
+}
