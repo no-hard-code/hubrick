@@ -1,4 +1,5 @@
 import {ERROR_TYPES} from "./errorTypes";
+import {logger} from "../logger/logger";
 
 /**
  * Simple flow engine for processing rule sets
@@ -17,9 +18,19 @@ class Engine {
     execute() {
         let stepResult;
 
+        logger.success('Start');
+
         do {
             stepResult = this.executeStep();
         } while (stepResult.next);
+
+        if (stepResult.done) {
+            logger.success('End.');
+        }
+
+        if (stepResult.error) {
+            logger.error(stepResult.description);
+        }
 
         return stepResult;
     }
@@ -76,9 +87,15 @@ class Engine {
         this.visitedRules[rule.id] = true;
         this.visitedPath.push(rule.id);
 
-        this.currentId = this.evaluateRule(rule)
-            ? rule.true_id
-            : rule.false_id;
+        const result = this.evaluateRule(rule);
+
+        if (result) {
+            this.currentId = rule.true_id;
+            logger.success(`Rule ${rule.id} passed`);
+        } else {
+            this.currentId = rule.false_id;
+            logger.warning(`Rule ${rule.id} failed`);
+        }
 
         return this.currentId;
     }

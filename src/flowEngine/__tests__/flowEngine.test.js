@@ -1,7 +1,7 @@
-import {execute} from "../index";
+import {execute} from "../../index";
 import {straightFlow} from "../__mocks__/straightFlow.mock";
 import {circularFlow} from "../__mocks__/circluarFlow.mock";
-import {ERROR_TYPES} from "../flowEngine/errorTypes";
+import {ERROR_TYPES} from "../errorTypes";
 import {malformedBodyFlow} from "../__mocks__/malformedBodyFlow.mock";
 
 describe("execute function", () => {
