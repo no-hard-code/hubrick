@@ -1,5 +1,8 @@
 import {ERROR_TYPES} from "./errorTypes";
 
+/**
+ * Simple flow engine for processing rule sets
+ */
 class Engine {
     constructor(ruleSet, initialFlowId) {
         this.ruleSet = ruleSet;
@@ -8,6 +11,9 @@ class Engine {
         this.visitedPath = [];
     }
 
+    /**
+     * Iterator over rule set. Iterator will iterate until error or success happened
+     */
     execute() {
         let stepResult;
 
@@ -18,6 +24,9 @@ class Engine {
         return stepResult;
     }
 
+    /**
+     * Concrete iteration step with handling all possible errors
+     */
     executeStep() {
         const rule = this.ruleSet[this.currentId];
         if (rule === undefined) {
@@ -53,10 +62,16 @@ class Engine {
         }
     }
 
+    /**
+     * Is rule was already executed
+     */
     isRuleVisited(rule) {
         return this.visitedRules[rule.id] === true;
     }
 
+    /**
+     * Remember rule and calculate next rule id
+     */
     visit(rule) {
         this.visitedRules[rule.id] = true;
         this.visitedPath.push(rule.id);
@@ -68,12 +83,18 @@ class Engine {
         return this.currentId;
     }
 
+    /**
+     * Evaluate rule body
+     */
     evaluateRule(rule) {
         const func = new Function('obj', rule.body);
         return func(this.ruleSet);
     }
 }
 
+/**
+ * API for external consumers
+ */
 export function execute(ruleSet, initialFlowId) {
     return new Engine(ruleSet, initialFlowId).execute();
 }
